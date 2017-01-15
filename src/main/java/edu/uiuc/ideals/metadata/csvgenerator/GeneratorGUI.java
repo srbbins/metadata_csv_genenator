@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
  */
 public class GeneratorGUI extends JFrame {
     private final JButton chooseSourceDirectoryBtn = new JButton("Select source files directory");
+    private final JButton generateButton = new JButton("Generate the CSV");
     private final JFileChooser inputDirectoryChooser = new JFileChooser();
     private final JTextField inputDirectoryNameField = new JTextField("", 40);
     private static String inputFileName;
@@ -17,8 +18,10 @@ public class GeneratorGUI extends JFrame {
     private final JPanel statusPanel = new JPanel();
     private final JTextArea console = new JTextArea(20, 50);
     private final JScrollPane scrollPane;
+    private final CsvGenerator generator;
 
     public GeneratorGUI(){
+        generator = new CsvGeneratorImpl();
         inputPanel = buildInputPanel();
         add(inputPanel);
         console.setEditable(false);
@@ -37,6 +40,7 @@ public class GeneratorGUI extends JFrame {
         inputDirectoryChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         inputPanel.add(chooseSourceDirectoryBtn);
         inputPanel.add(inputDirectoryNameField);
+        inputPanel.add(generateButton);
         //add the status info area present under all tabs
 
         //inputPanel.add(inputDirectoryChooser);
@@ -61,6 +65,11 @@ public class GeneratorGUI extends JFrame {
                             }
                         }
                 );
+        generateButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                generator.doGeneration(inputFileName, console);
+            }
+        });
 
     }
 

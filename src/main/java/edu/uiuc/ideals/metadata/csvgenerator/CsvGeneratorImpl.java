@@ -8,6 +8,7 @@ import javax.swing.*;
 public class CsvGeneratorImpl implements CsvGenerator{
 
     public void doGeneration(String inputDirectory, JTextArea console) {
+        console.append("got here");
 
     }
 }
