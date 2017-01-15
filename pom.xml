@@ -16,7 +16,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>edu.uiuc.ideals.metadata.csvgenerator.frame</mainClass>
+                            <mainClass>edu.uiuc.ideals.metadata.csvgenerator.App</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
