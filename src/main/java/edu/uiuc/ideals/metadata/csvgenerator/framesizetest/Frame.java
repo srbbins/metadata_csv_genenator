@@ -5,7 +5,7 @@ import javax.swing.*;
 /**
  * Created by srobbins on 1/2/17.
  */
-public class frame {
+public class Frame {
 
 
     /**
@@ -27,6 +27,8 @@ class SimpleFrame extends JFrame
   {
       private static final int DEFAULT_WIDTH = 300;
       private static final int DEFAULT_HEIGHT = 200;
+      private JButton yellowButton = new JButton("Yellow");
+      private JButton blueButton = new JButton(new ImageIcon("blue-ball.gif"));
 
       public SimpleFrame()
       {
