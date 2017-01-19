@@ -28,7 +28,12 @@ public class CsvGeneratorImpl implements CsvGenerator{
                     String ID = getCatalodIdFromFilename(file.toFile().getAbsolutePath());
                     console.append(ID);
                     MarcRecord record = new MarcRecord();
-                    record.retrieve(ID);
+                    try {
+                        record.retrieve(ID);
+                    } catch (TransformerException e) {
+                        console.append(e.getMessageAndLocation());
+                        e.printStackTrace();
+                    }
                 }
                 return FileVisitResult.CONTINUE;
             }
