@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 
 /**
  * Created by srobbins on 1/8/17.
@@ -67,7 +69,15 @@ public class GeneratorGUI extends JFrame {
                 );
         generateButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                generator.doGeneration(inputFileName, console);
+                try {
+                    generator.doGeneration(inputFileName, console);
+                } catch (FileNotFoundException e1) {
+                    console.append(e1.getMessage());
+                    e1.printStackTrace();
+                } catch (UnsupportedEncodingException e1) {
+                    console.append(e1.getMessage());
+                    e1.printStackTrace();
+                }
             }
         });
 

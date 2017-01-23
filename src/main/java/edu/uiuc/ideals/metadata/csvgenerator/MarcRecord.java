@@ -19,13 +19,13 @@ import javax.xml.transform.stream.StreamSource;
  * Created by srobbins on 1/16/17.
  */
 public class MarcRecord {
-    public void retrieve(String ID) throws IOException, TransformerException {
+    public String retrieve(String ID) throws IOException, TransformerException {
         URL url = getURL(ID);
         URLConnection con = url.openConnection();
         InputStream in = con.getInputStream();
         String encoding = con.getContentEncoding();
         encoding = encoding == null ? "UTF-8" : encoding;
-        transform(in);
+        return transform(in);
         //String body = IOUtils.toString(in, encoding);
         //System.out.println(body);
 
@@ -35,7 +35,7 @@ public class MarcRecord {
         return new URL(prefix+"/"+ID+".marc");
     }
 
-    private void transform(InputStream dataXML) throws TransformerException {
+    private String transform(InputStream dataXML) throws TransformerException {
         TransformerFactory factory = TransformerFactory.newInstance();
         InputStream inputXSL  = MarcRecord.class.getClassLoader().getResourceAsStream("MARC21slim2IDEALSDC.xsl");
         StreamSource xslStream = new StreamSource(inputXSL);
@@ -46,7 +46,9 @@ public class MarcRecord {
         StreamResult out = new StreamResult(writer);
         transformer.transform(in, out);
         System.out.println("The generated xml is:\n" + writer.toString());
-
+        return writer.toString();
     }
+
+
 
 }
