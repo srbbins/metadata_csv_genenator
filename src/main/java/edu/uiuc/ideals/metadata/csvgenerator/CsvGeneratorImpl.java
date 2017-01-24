@@ -28,10 +28,11 @@ public class CsvGeneratorImpl implements CsvGenerator{
     private JTextArea console;
     //private final Iterable<CSVRecord> records;
     private List<SAFMetadata> SAFList= new ArrayList<SAFMetadata>();
+    private CsvData csvData = new CsvData();
 
     public void doGeneration(String inputDirectory, final JTextArea console) {
         this.console = console;
-        Path inputDirectoryObj  = Paths.get(inputDirectory);
+        final Path inputDirectoryObj  = Paths.get(inputDirectory);
         SimpleFileVisitor<Path> traverser = new SimpleFileVisitor<Path>(){
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attr) throws IOException {
@@ -43,6 +44,8 @@ public class CsvGeneratorImpl implements CsvGenerator{
                     try {
                         SAFMetadata metadata = new SAFMetadata(record.retrieve(ID));
                         SAFList.add(metadata);
+                        csvData.createRow(inputDirectoryObj.relativize(file).toString(),metadata);
+                        csvData.writeCSV(console);
 
                     } catch (TransformerException e) {
                         console.append(e.getMessageAndLocation()+"\n");
@@ -55,7 +58,7 @@ public class CsvGeneratorImpl implements CsvGenerator{
                         e.printStackTrace();
                     }
                 }
-                showDSpaceMetadata();
+                //showDSpaceMetadata();
                 return FileVisitResult.CONTINUE;
             }
         };

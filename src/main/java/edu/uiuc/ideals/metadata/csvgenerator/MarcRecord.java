@@ -9,9 +9,7 @@ import java.util.Properties;
 
 import org.apache.commons.io.IOUtils;
 
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
@@ -37,6 +35,7 @@ public class MarcRecord {
 
     private String transform(InputStream dataXML) throws TransformerException {
         TransformerFactory factory = TransformerFactory.newInstance();
+        factory.setURIResolver(new ClasspathResourceURIResolver());
         InputStream inputXSL  = MarcRecord.class.getClassLoader().getResourceAsStream("MARC21slim2IDEALSDC.xsl");
         StreamSource xslStream = new StreamSource(inputXSL);
         Transformer transformer = factory.newTransformer(xslStream);
@@ -45,8 +44,14 @@ public class MarcRecord {
 
         StreamResult out = new StreamResult(writer);
         transformer.transform(in, out);
-        System.out.println("The generated xml is:\n" + writer.toString());
         return writer.toString();
+    }
+
+    class ClasspathResourceURIResolver implements URIResolver {
+        @Override
+        public Source resolve(String href, String base) throws TransformerException {
+            return new StreamSource(MarcRecord.class.getClassLoader().getResourceAsStream(href));
+        }
     }
 
 
