@@ -82,6 +82,22 @@ public class SAFMetadata {
     public NodeList getDcNodes(){
         return dcNodes;
     }
+
+    public Iterable<String> getRecord(String filename, String[] headerArray) {
+        List<String> record = new ArrayList<String>();
+        Map<String, String> metadataValues = getMetadataValues();
+        for(String headerEntry: headerArray) {
+            if (metadataValues.containsKey(headerEntry)) {
+                record.add(metadataValues.get(headerEntry));
+            } else if (headerEntry.startsWith("bundle")) {
+                record.add(filename);
+            } else {
+                record.add("");
+            }
+        }
+        return record;
+    }
+
     private class DspaceMetadataValue
     {
         private String schema;

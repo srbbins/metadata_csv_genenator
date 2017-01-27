@@ -1,10 +1,14 @@
 package edu.uiuc.ideals.metadata.csvgenerator;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
+
 import javax.swing.*;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.*;
 
 /**
  * Created by srobbins on 1/23/17.
@@ -38,6 +42,36 @@ public class CsvData {
                 console.append(headerEntry+": "+mdValues.get(headerEntry)+"\n");
             }
         }
+        writeOut(console);
 
+    }
+    private void writeOut(JTextArea console){
+        PrintWriter printerStream = null;
+        try {
+            printerStream = new PrintWriter("metadata.csv", "UTF-8");
+        } catch (FileNotFoundException e) {
+            console.append(e.getMessage());
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            console.append(e.getMessage());
+            e.printStackTrace();
+        }
+        try {
+            List<String> headerList = new ArrayList<String>(header);
+            headerList.add(0, "bundle:ORIGINAL");
+            String[] headerArray = headerList.toArray(new String[header.size()]);
+
+           CSVPrinter printer = CSVFormat.DEFAULT.withHeader(headerArray).print(printerStream);
+           for(String filename : csvRows.keySet()) {
+
+               printer.printRecord(csvRows.get(filename).getRecord(filename, headerArray));
+               printer.flush();
+           }
+           printer.close();
+
+        } catch (IOException e) {
+            console.append(e.getMessage());
+            e.printStackTrace();
+        }
     }
 }
