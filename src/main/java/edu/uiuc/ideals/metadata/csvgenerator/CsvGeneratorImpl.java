@@ -48,14 +48,11 @@ public class CsvGeneratorImpl implements CsvGenerator{
                         csvData.writeCSV(console);
 
                     } catch (TransformerException e) {
-                        console.append(e.getMessageAndLocation()+"\n");
-                        e.printStackTrace();
+                        ConsoleUtils.printTransformExceptionInfo(e, console);
                     } catch (SAXException e) {
-                        console.append(e.getMessage()+"\n");
-                        e.printStackTrace();
+                        ConsoleUtils.printExceptionInfo(e, console);
                     } catch (ParserConfigurationException e) {
-                        console.append(e.getMessage()+"\n");
-                        e.printStackTrace();
+                        ConsoleUtils.printExceptionInfo(e, console);
                     }
                 }
                 //showDSpaceMetadata();

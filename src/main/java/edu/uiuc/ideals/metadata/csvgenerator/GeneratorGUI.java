@@ -43,9 +43,7 @@ public class GeneratorGUI extends JFrame {
         inputPanel.add(chooseSourceDirectoryBtn);
         inputPanel.add(inputDirectoryNameField);
         inputPanel.add(generateButton);
-        //add the status info area present under all tabs
 
-        //inputPanel.add(inputDirectoryChooser);
         buildInputListeners();
 
         return inputPanel;

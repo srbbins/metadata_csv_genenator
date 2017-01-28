@@ -4,10 +4,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
 import javax.swing.*;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -70,8 +67,7 @@ public class CsvData {
            printer.close();
 
         } catch (IOException e) {
-            console.append(e.getMessage());
-            e.printStackTrace();
+            ConsoleUtils.printExceptionInfo(e ,console);
         }
     }
 }

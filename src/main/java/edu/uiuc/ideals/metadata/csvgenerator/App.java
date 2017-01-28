@@ -13,7 +13,7 @@ public class App {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 GeneratorGUI gui = new GeneratorGUI();
-                gui.setSize(800, 640);
+                gui.setSize(800, 600);
                 gui.setResizable(false);
                 gui.setVisible(true);
             }
