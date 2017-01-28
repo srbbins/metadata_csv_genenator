@@ -70,11 +70,9 @@ public class GeneratorGUI extends JFrame {
                 try {
                     generator.doGeneration(inputFileName, console);
                 } catch (FileNotFoundException e1) {
-                    console.append(e1.getMessage());
-                    e1.printStackTrace();
+                    ConsoleUtils.printExceptionInfo(e1, console);
                 } catch (UnsupportedEncodingException e1) {
-                    console.append(e1.getMessage());
-                    e1.printStackTrace();
+                    ConsoleUtils.printExceptionInfo(e1, console);
                 }
             }
         });
